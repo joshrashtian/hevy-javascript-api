@@ -1,0 +1,40 @@
+{
+  "name": "hevy-react",
+  "version": "0.1.0",
+  "description": "React bindings for the Hevy public API",
+  "type": "module",
+  "license": "ISC",
+  "keywords": ["hevy", "react", "workout", "fitness"],
+  "files": ["dist"],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "generate": "node scripts/generate.mjs",
+    "prepublishOnly": "bun run typecheck && bun run build"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0",
+    "vite-plugin-dts": "^5.1.1"
+  },
+  "dependencies": {
+    "axios": "^1.20.0"
+  }
+}
