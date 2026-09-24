@@ -1,4 +1,4 @@
-// Regenerates src/schema.d.ts from Hevy's OpenAPI spec.
+// Regenerates src/schema.ts from Hevy's OpenAPI spec.
 //
 // Hevy only publishes the spec embedded in its Swagger UI bundle, so we pull
 // it out of there first. The generator runs via npx with TypeScript 5 because
@@ -19,7 +19,7 @@ console.log(`Wrote hevy-openapi.json (${Object.keys(spec.paths).length} paths)`)
 
 execFileSync(
   "npx",
-  ["-y", "-p", "openapi-typescript@7", "-p", "typescript@5", "openapi-typescript", "hevy-openapi.json", "-o", "src/schema.d.ts"],
+  ["-y", "-p", "openapi-typescript@7", "-p", "typescript@5", "openapi-typescript", "hevy-openapi.json", "-o", "src/schema.ts"],
   { stdio: "inherit" },
 );
 

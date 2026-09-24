@@ -1,10 +1,11 @@
 {
-  "name": "hevy-react",
+  "name": "hevy-javascript",
   "version": "0.1.0",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "devDependencies": {
     "@types/react": "^19.3.0",
+    "@typescript/typescript6": "^6.0.2",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "typescript": "^7.0.2",
@@ -21,8 +22,24 @@
     }
   },
   "description": "React bindings for the Hevy public API",
-  "files": ["dist"],
-  "keywords": ["hevy", "react", "workout", "fitness"],
+  "author": "Joshua Rashtian",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshrashtian/hevy-js-uo.git"
+  },
+  "homepage": "https://github.com/joshrashtian/hevy-js-uo#readme",
+  "bugs": {
+    "url": "https://github.com/joshrashtian/hevy-js-uo/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "hevy",
+    "react",
+    "workout",
+    "fitness"
+  ],
   "license": "ISC",
   "scripts": {
     "build": "vite build",

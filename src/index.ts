@@ -1,4 +1,3 @@
-import { createHevyClient } from "./client/client";
 import type { components, paths } from "./schema";
 
 export type { components, paths };
@@ -21,4 +20,17 @@ export type {
   HevyClient,
   HevyClientOptions,
   PaginatedWorkouts,
+  PaginatedRoutines,
+  PaginatedRoutineFolders,
+  PaginatedExerciseTemplates,
+  PaginatedBodyMeasurements,
+  WorkoutInput,
+  NewRoutineInput,
+  RoutineUpdateInput,
+  RoutineFolderInput,
+  CustomExerciseInput,
+  BodyMeasurementUpdate,
 } from "./client/client";
+
+export { HevyProvider, HevyContext } from "./lib/react/provider";
+export { useHevy } from "./lib/react/useHevy";

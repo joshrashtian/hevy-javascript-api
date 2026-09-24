@@ -1,20 +1,20 @@
-import React, { createContext, useMemo } from "react";
-import { createHevyClient, type HevyClient } from "../../client/client";
+import { createContext, useMemo, type ReactNode } from "react";
+import {
+  createHevyClient,
+  type HevyClient,
+  type HevyClientOptions,
+} from "../../client/client";
 
 export const HevyContext = createContext<HevyClient | null>(null);
 
-export function HevyProdiver({
+export function HevyProvider({
   children,
   apiKey,
-  altUrl,
-}: {
-  children: React.ReactNode;
-  apiKey: string;
-  altUrl?: string;
-}) {
+  altBaseUrl,
+}: HevyClientOptions & { children: ReactNode }) {
   const client = useMemo(
-    () => createHevyClient({ apiKey, altBaseUrl: altUrl }),
-    [apiKey, altUrl],
+    () => createHevyClient({ apiKey, altBaseUrl }),
+    [apiKey, altBaseUrl],
   );
   return <HevyContext.Provider value={client}>{children}</HevyContext.Provider>;
 }
