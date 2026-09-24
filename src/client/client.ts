@@ -1,11 +1,30 @@
-import { getWorkouts } from "../functions/workouts";
+import type { components } from "../schema";
 
-interface HevyClientType {
+type Workout = components["schemas"]["Workout"];
+type PaginatedWorkoutEvents = components["schemas"]["PaginatedWorkoutEvents"];
+
+export interface HevyClientOptions {
   apiKey: string;
-  altBaseUrl: string;
+  altBaseUrl?: string;
 }
 
-export const createHevyClient = ({ apiKey, altBaseUrl }: HevyClientType) => {
+export class HevyError extends Error {
+  constructor(
+    public status: number,
+    public body: string,
+  ) {
+    super(`Hevy API Error ${status}: ${body}`);
+    this.name = "HevyError";
+  }
+}
+
+export interface PaginatedWorkouts {
+  page: number;
+  page_count: number;
+  workouts: Workout[];
+}
+
+export const createHevyClient = ({ apiKey, altBaseUrl }: HevyClientOptions) => {
   const baseUrl: string = altBaseUrl ?? "https://api.hevyapp.com/v1";
 
   const getRequest = async <T>(
@@ -23,35 +42,39 @@ export const createHevyClient = ({ apiKey, altBaseUrl }: HevyClientType) => {
       headers: { "api-key": apiKey, Accept: "application/json" },
     });
     if (!res.ok) {
-      throw new Error(`Hevy API Error ${res.status}: ${await res.text()}`);
+      throw new HevyError(res.status, await res.text());
     }
     return res.json() as Promise<T>;
   };
 
   return {
-    getWorkouts: async (page?: number, pageSize?: number) => {
-      return getRequest("/workouts", { page, pageSize });
-    },
+    getWorkouts: (page?: number, pageSize?: number) =>
+      getRequest<PaginatedWorkouts>("/workouts", { page, pageSize }),
 
-    getTotalWorkouts: async () => {
-      return getRequest("/workouts/count");
-    },
+    getTotalWorkouts: async () =>
+      (await getRequest<{ workout_count: number }>("/workouts/count"))
+        .workout_count,
 
-    getWorkoutsSinceDate: async ({
+    getWorkoutsSinceDate: ({
+      since,
       page,
       pageSize,
-      event,
     }: {
-      page: number;
-      pageSize: number;
-      event: string;
-    }) => {
-      return getRequest("/workouts/events", { page, pageSize, event });
-    },
+      since: string;
+      page?: number;
+      pageSize?: number;
+    }) =>
+      getRequest<PaginatedWorkoutEvents>("/workouts/events", {
+        since,
+        page,
+        pageSize,
+      }),
 
-    getWorkout: async (id: string) => {
-      if (!id) throw "Error: No workout id in getWorkout method.";
-      return getRequest("/workouts/" + id);
+    getWorkout: (id: string) => {
+      if (!id) throw new Error("getWorkout: id is required");
+      return getRequest<Workout>("/workouts/" + encodeURIComponent(id));
     },
   };
 };
+
+export type HevyClient = ReturnType<typeof createHevyClient>;

@@ -17,4 +17,8 @@ export type UserInfo = Schemas["UserInfo"];
 export type PaginatedWorkoutEvents = Schemas["PaginatedWorkoutEvents"];
 
 export { createHevyClient, HevyError } from "./client/client";
-export type { HevyClient, HevyClientOptions } from "./client";
+export type {
+  HevyClient,
+  HevyClientOptions,
+  PaginatedWorkouts,
+} from "./client/client";
