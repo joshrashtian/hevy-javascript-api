@@ -1,3 +1,4 @@
+import { createHevyClient } from "./client/client";
 import type { components, paths } from "./schema";
 
 export type { components, paths };
@@ -15,5 +16,5 @@ export type BodyMeasurement = Schemas["BodyMeasurement"];
 export type UserInfo = Schemas["UserInfo"];
 export type PaginatedWorkoutEvents = Schemas["PaginatedWorkoutEvents"];
 
-export { createHevyClient, HevyError } from "./client";
+export { createHevyClient, HevyError } from "./client/client";
 export type { HevyClient, HevyClientOptions } from "./client";
